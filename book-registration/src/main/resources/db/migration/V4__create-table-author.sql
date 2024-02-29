@@ -1,0 +1,5 @@
+CREATE TABLE author(
+    id VARCHAR(255) PRIMARY KEY NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    nationality VARCHAR(255) NOT NULL
+);

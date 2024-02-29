@@ -1,0 +1,2 @@
+ALTER TABLE book
+ADD COLUMN id_author VARCHAR(255);
