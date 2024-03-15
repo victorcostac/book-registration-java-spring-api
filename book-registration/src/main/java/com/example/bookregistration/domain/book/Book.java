@@ -20,13 +20,14 @@ import lombok.Setter;
 @NoArgsConstructor
 
 public class Book {
+    
     @Id @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @Column(nullable = false) //column Length 
+    @Column(length = 100,nullable = false) 
     private String title;
     
-    @Column
+    @Column(length = 30, nullable = false)
     private String year_of_publication;
 
     @Column
@@ -35,8 +36,8 @@ public class Book {
     @Column
     private Boolean active;
 
-    @OneToOne
-    @JoinColumn(name = "id_author", referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name = "id_author")
     private Author author;
 
     public Book(RequestBook requestbook){

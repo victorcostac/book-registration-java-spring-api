@@ -1,14 +1,25 @@
 package com.example.bookregistration.domain.author;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.annotations.*;
 import org.hibernate.validator.constraints.Length;
 
+import com.example.bookregistration.domain.author.dto.RequestAuthorDTO;
+import com.example.bookregistration.domain.book.Book;
+import com.example.bookregistration.domain.book.BookRepository;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 import jakarta.validation.constraints.NotBlank;
@@ -28,9 +39,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-// @SQLDelete(sql = "UPDATE author SET active = false WHERE id = ?")
+// @SQLDelete(sql = "UPDATE author SET active = false WHERE id = ?") //soft delete
 @Where(clause = "active = true")
-public class Author {
+public class Author  {
     
     @Id @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
@@ -50,9 +61,13 @@ public class Author {
 
     @NotNull
     @Column(nullable = false) 
+    // @JsonIgnore //coluna não será enviada na resposta/ ignorada caso seja recebida
     private Boolean active = true; //Igualar o active a "true" é o mesmo o que usar o "this.active = true", o que está evidente na linha 55.
     
-    public Author(RequestAuthor requestAuthor){
+    // @OneToMany(cascade = CascadeType.ALL)
+    // private List<Book> Books = new ArrayList<>();
+
+    public Author(RequestAuthorDTO requestAuthor){
         this.name = requestAuthor.name();
         this.nationality = requestAuthor.nationality();
         this.active = true;
