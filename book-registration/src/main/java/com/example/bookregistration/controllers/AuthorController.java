@@ -2,10 +2,7 @@ package com.example.bookregistration.controllers;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,8 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.bookregistration.domain.author.Author;
-import com.example.bookregistration.domain.author.RequestAuthor;
+import com.example.bookregistration.domain.author.dto.RequestAuthorDTO;
+import com.example.bookregistration.domain.author.dto.ResponseAuthorDTO;
 import com.example.bookregistration.service.AuthorService;
 
 import jakarta.validation.Valid;
@@ -38,47 +35,42 @@ public class AuthorController {
     }
 
     @GetMapping("/list")
-    public @ResponseBody List<Author> list() {
+    public @ResponseBody List<ResponseAuthorDTO> list() {
         return authorService.list();
     }
 
     @GetMapping("/{id}")
-    public Author findById(@PathVariable @NotNull String id) {
+    public ResponseAuthorDTO findById(@PathVariable @NotNull String id) {
         return authorService.findById(id); //-----------> 01/03
     }
 
     @PostMapping("/create")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Author create(@RequestBody @Valid RequestAuthor data) {
-        Author author = new Author(data);
-        return authorService.create(author);
+    public ResponseAuthorDTO create(@RequestBody @Valid RequestAuthorDTO data) {
+        return authorService.create(data);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Author> update(@PathVariable @NotNull String id,
-            @RequestBody @Valid RequestAuthor author) {
-        return authorService.update(id, author)
-                .map(recordFound -> ResponseEntity.status(HttpStatus.OK).body(recordFound))
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseAuthorDTO update(@PathVariable @NotNull String id,
+            @RequestBody @Valid @NotNull RequestAuthorDTO author) {
+        return authorService.update(id, author);
     }
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable @NotNull String id) {
-        if(authorService.delete(id)){
-            return ResponseEntity.noContent().<Void>build();
-        }
-        return ResponseEntity.notFound().build();
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable @NotNull String id) {
+        authorService.delete(id);
     }
 
 
-    @DeleteMapping("/softdelete/{id}")
-    public ResponseEntity<Void> softDelete(@PathVariable @NotNull String id) {
+    @DeleteMapping("/soft/{id}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    public void softDelete(@PathVariable @NotNull String id) {
+        authorService.softDelete(id);
 
-        if(authorService.softDelete(id)){
-            return ResponseEntity.noContent().<Void>build();
-        }
-        return ResponseEntity.notFound().build();
+
+
     }
        
     // @GetMapping("/findactive")

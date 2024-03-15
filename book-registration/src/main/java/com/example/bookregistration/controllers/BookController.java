@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.bookregistration.domain.author.Author;
 import com.example.bookregistration.domain.author.AuthorRepositoy;
-import com.example.bookregistration.domain.author.RequestAuthor;
+import com.example.bookregistration.domain.author.dto.RequestAuthorDTO;
 import com.example.bookregistration.domain.book.Book;
 import com.example.bookregistration.domain.book.BookRepository;
 import com.example.bookregistration.domain.book.RequestBook;
@@ -53,9 +53,7 @@ public class BookController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity registerBook(@PathVariable String id, @RequestBody @Valid RequestBook data) {
-        
-
+    public ResponseEntity registerBook(@RequestBody @Valid RequestBook data) {
         
 
         Book newbook = new Book(data);
