@@ -1,11 +1,11 @@
-package com.example.bookregistration.domain.author.dto;
+package com.example.bookregistration.dto.AuthorDTO;
 
 import org.hibernate.validator.constraints.Length;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public record RequestAuthorDTO(
+public record ResponseAuthorDTO(
     String id,
 
     @NotNull 
@@ -15,7 +15,9 @@ public record RequestAuthorDTO(
     @NotBlank
     @NotNull
     @Length(min = 3,max = 30)
-    String nationality
+    String nationality,
+
+    Boolean active
 ){
 
 

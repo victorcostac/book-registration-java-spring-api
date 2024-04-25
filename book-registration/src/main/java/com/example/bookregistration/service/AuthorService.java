@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import com.example.bookregistration.domain.author.AuthorRepositoy;
-import com.example.bookregistration.domain.author.dto.RequestAuthorDTO;
-import com.example.bookregistration.domain.author.dto.ResponseAuthorDTO;
-import com.example.bookregistration.domain.author.dto.mapper.AuthorMapper;
+import com.example.bookregistration.dto.AuthorDTO.RequestAuthorDTO;
+import com.example.bookregistration.dto.AuthorDTO.ResponseAuthorDTO;
+import com.example.bookregistration.dto.AuthorDTO.mapper.AuthorMapper;
 import com.example.bookregistration.exception.RecordNotFoundException;
 
 import jakarta.transaction.Transactional;

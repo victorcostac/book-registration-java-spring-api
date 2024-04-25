@@ -7,9 +7,9 @@ import java.util.List;
 import org.hibernate.annotations.*;
 import org.hibernate.validator.constraints.Length;
 
-import com.example.bookregistration.domain.author.dto.RequestAuthorDTO;
 import com.example.bookregistration.domain.book.Book;
 import com.example.bookregistration.domain.book.BookRepository;
+import com.example.bookregistration.dto.AuthorDTO.RequestAuthorDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;

@@ -1,10 +1,12 @@
-package com.example.bookregistration.domain.author.dto.mapper;
+package com.example.bookregistration.dto.AuthorDTO.mapper;
 
 import org.springframework.stereotype.Component;
 
 import com.example.bookregistration.domain.author.Author;
-import com.example.bookregistration.domain.author.dto.RequestAuthorDTO;
-import com.example.bookregistration.domain.author.dto.ResponseAuthorDTO;
+import com.example.bookregistration.dto.AuthorDTO.RequestAuthorDTO;
+import com.example.bookregistration.dto.AuthorDTO.ResponseAuthorDTO;
+
+
 
 @Component
 public class AuthorMapper {

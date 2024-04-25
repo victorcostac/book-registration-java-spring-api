@@ -15,25 +15,24 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.bookregistration.domain.author.Author;
 import com.example.bookregistration.domain.author.AuthorRepositoy;
-import com.example.bookregistration.domain.author.dto.RequestAuthorDTO;
 import com.example.bookregistration.domain.book.Book;
 import com.example.bookregistration.domain.book.BookRepository;
-import com.example.bookregistration.domain.book.RequestBook;
+import com.example.bookregistration.dto.BookDTO.RequestBookDTO;
+import com.example.bookregistration.service.BookService;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/api/V1/book")
 public class BookController {
-    
-    @Autowired
-    private BookRepository repository;
 
-    @Autowired
-    private AuthorRepositoy authorRepository;
+    private final BookService bookService;
     
+    public BookController(BookService bookService) {
+        this.bookService = bookService;
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Book> getbook(@PathVariable String id) {
     
@@ -53,7 +52,7 @@ public class BookController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity registerBook(@RequestBody @Valid RequestBook data) {
+    public ResponseEntity registerBook(@RequestBody @Valid RequestBookDTO data) {
         
 
         Book newbook = new Book(data);
@@ -62,10 +61,10 @@ public class BookController {
     }
 
     @PostMapping("/registermany")
-    public ResponseEntity<List<Book>> registerBooks(@RequestBody @Valid List<RequestBook> dataList) {
+    public ResponseEntity<List<Book>> registerBooks(@RequestBody @Valid List<RequestBookDTO> dataList) {
         List<Book> newBooks = new ArrayList<>();
 
-        for (RequestBook data : dataList) {
+        for (RequestBookDTO data : dataList) {
             Book newBook = new Book(data);
             repository.save(newBook);
             newBooks.add(newBook);
@@ -76,7 +75,7 @@ public class BookController {
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity updateBook(@PathVariable String id, @RequestBody @Valid RequestBook data) {
+    public ResponseEntity updateBook(@PathVariable String id, @RequestBody @Valid RequestBookDTO data) {
         Optional<Book> optionalBook = repository.findById(id);
         if (optionalBook.isPresent()) {
             Book book = optionalBook.get();
@@ -92,15 +91,14 @@ public class BookController {
     // FAZER UM MAP!!!
     @PutMapping("/list/map/")
     @Transactional
-    public ResponseEntity<List<Book>> updateBookbyMap(@RequestBody @Valid List<RequestBook> dataList) {
+    public ResponseEntity<List<Book>> updateBookbyMap(@RequestBody @Valid List<RequestBookDTO> dataList) {
 
         List<Book> updatedBooksList = new ArrayList<Book>();
 
-        for(RequestBook item : dataList){
+        for(RequestBookDTO item : dataList){
 
             Optional<Book> optionalUpdatedBook = repository.findById(item.id()).map(resource -> {
                 resource.setTitle(item.title());
-                // resource.setAuthor(item.author());
                 resource.setYear_of_publication(item.year_of_publication());
                 resource.setQuantity(item.quantity());
                 return resource;

@@ -5,3 +5,4 @@ CREATE TABLE book (
     year_of_publication VARCHAR(255) NOT NULL,
     quantity INTEGER NOT NULL
 );
+

@@ -1,6 +1,7 @@
 package com.example.bookregistration.domain.book;
 
 import com.example.bookregistration.domain.author.Author;
+import com.example.bookregistration.dto.BookDTO.RequestBookDTO;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -40,13 +41,12 @@ public class Book {
     @JoinColumn(name = "id_author")
     private Author author;
 
-    public Book(RequestBook requestbook){
-        this.title = requestbook.title();
-        // this.author = requestbook.author();
-        this.year_of_publication = requestbook.year_of_publication();
-        this.quantity = requestbook.quantity();
+    public Book(RequestBookDTO RequestBookDTO){
+        this.title = RequestBookDTO.title();
+        this.year_of_publication = RequestBookDTO.year_of_publication();
+        this.quantity = RequestBookDTO.quantity();
         this.active = true;
-        this.author = requestbook.author();
+        this.author = RequestBookDTO.author();
     }
 
 }

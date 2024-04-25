@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.bookregistration.domain.author.dto.RequestAuthorDTO;
-import com.example.bookregistration.domain.author.dto.ResponseAuthorDTO;
+import com.example.bookregistration.dto.AuthorDTO.RequestAuthorDTO;
+import com.example.bookregistration.dto.AuthorDTO.ResponseAuthorDTO;
 import com.example.bookregistration.service.AuthorService;
 
 import jakarta.validation.Valid;
@@ -27,7 +27,6 @@ import jakarta.validation.constraints.NotNull;
 @RequestMapping("/api/V1/author")
 public class AuthorController {
 
-    
     private final AuthorService authorService; 
 
     public AuthorController(AuthorService authorService) {
@@ -68,8 +67,6 @@ public class AuthorController {
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void softDelete(@PathVariable @NotNull String id) {
         authorService.softDelete(id);
-
-
 
     }
        
